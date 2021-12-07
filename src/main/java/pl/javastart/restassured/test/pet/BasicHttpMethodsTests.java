@@ -1,5 +1,11 @@
 package pl.javastart.restassured.test.pet;
 
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pl.javastart.restassured.pojo.Category;
 import pl.javastart.restassured.pojo.Pet;
@@ -11,6 +17,18 @@ import static io.restassured.RestAssured.given;
 
 public class BasicHttpMethodsTests {
 
+  @BeforeClass
+  public void setupConfiguration(){
+    RestAssured.baseURI = "https://swaggerpetstore.przyklady.javastart.pl";
+    RestAssured.basePath = "v2";
+    RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+//Stosowanie statycznej konfiguracji uniemożliwia w większości przypadków poprawne wykonanie testów wielowątkowo!
+// Statyczną konfigurację należy stosować z rozwagą!
+    RestAssured.requestSpecification = new RequestSpecBuilder().setContentType("application/json").build();
+    RestAssured.responseSpecification = new ResponseSpecBuilder().expectStatusCode(200).build();
+  }
+
+
   @Test
   public void givenPetWhenPostPetThenPetIsCreatedTest() {
 
@@ -21,17 +39,15 @@ public class BasicHttpMethodsTests {
             .status("available")
             .build();
 
-    given().log().all().body(pet).contentType("application/json")
-            .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
-            .then().log().all().statusCode(200);
+    given().body(pet)
+            .when().post("/pet");
   }
 
   @Test
   public void givenExistingPetIdWhenGetPetThenReturnPetTest() {
-    given().log().method().log().uri()
+    given()
             .pathParam("petId", 1)
-            .when().get("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}")
-            .then().log().all().statusCode(200);
+            .when().get("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}");
   }
 
   @Test
@@ -44,15 +60,13 @@ public class BasicHttpMethodsTests {
             .status("available")
             .build();
 
-    given().log().all().body(pet).contentType("application/json")
-            .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
-            .then().log().all().statusCode(200);
+    given().body(pet)
+            .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet");
 
     pet.setName("Reksio");
 
-    given().log().all().body(pet).contentType("application/json")
-            .when().put("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
-            .then().log().all().statusCode(200);
+    given().body(pet)
+            .when().put("https://swaggerpetstore.przyklady.javastart.pl/v2/pet");
   }
 
   @Test
@@ -65,14 +79,12 @@ public class BasicHttpMethodsTests {
             .status("available")
             .build();
 
-    given().log().all().body(pet).contentType("application/json")
-            .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet")
-            .then().log().all().statusCode(200);
+    given().body(pet)
+            .when().post("https://swaggerpetstore.przyklady.javastart.pl/v2/pet");
 
-    given().log().all().contentType("application/json")
+    given()
             .pathParam("petId", pet.getId())
-            .when().delete("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}")
-            .then().log().all().statusCode(200);
+            .when().delete("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/{petId}");
   }
 
 }

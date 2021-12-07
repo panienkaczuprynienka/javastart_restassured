@@ -47,6 +47,20 @@ public class QueryParamsTests {
             .statusCode(200)
             .extract().as(Pet[].class);
 
+    // <-Zapis rownowazny!! ->
+
+    List<Pet> pets2 = given()
+            .log().all()
+            .contentType("application/json")
+            .queryParam("status", PetStatus.SOLD.getStatus())
+            .when()
+            .get("https://swaggerpetstore.przyklady.javastart.pl/v2/pet/findByStatus")
+            .then()
+            .log().all()
+            .statusCode(200)
+            .extract().jsonPath().getList("", Pet.class);
+
+
     System.out.println("ZWIERZATKA TO " + Arrays.stream(pets).allMatch(p -> p.getStatus().equals(PetStatus.SOLD.getStatus())));
     List<String> soldPetsNAmes = Arrays.stream(pets).map(p -> p.getName()).collect(Collectors.toList());
     System.out.println(soldPetsNAmes);
