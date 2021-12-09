@@ -7,13 +7,16 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 public class UserBaseTest {
 
+  @Parameters({"baseUri", "basePath"})
   @BeforeClass
-  public void setupConfiguration(){
-    RestAssured.baseURI = "https://swaggerpetstore.przyklady.javastart.pl/";
-    RestAssured.basePath = "v2";
+  public void setupConfiguration(@Optional("https://swaggerpetstore.przyklady.javastart.pl") String baseUri, @Optional("/v2") String basePath){
+    RestAssured.baseURI = baseUri;
+    RestAssured.basePath = basePath;
     RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
   }
 }

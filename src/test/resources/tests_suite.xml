@@ -2,6 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Smoke tests">
 
+    <parameter name="baseUri" value="https://swaggerpetstore.przyklady.javastart.pl"></parameter>
+    <parameter name="basePath" value="/v2"></parameter>
+    <packages>
+
+        <package name="pl.javastart.restassured.test.user"></package>
+    </packages>
     <test name="User Creation API">
         <classes>
             <class name="pl.javastart.restassured.test.user.UserCreationTests"/>
@@ -13,5 +19,8 @@
             <class name="pl.javastart.restassured.test.user.UserUpdateTests"/>
         </classes>
     </test>
+    <listeners>
+        <listener class-name="pl.javastart.restassured.listeners.MyListener" />
+    </listeners>
 
 </suite>

@@ -1,20 +1,17 @@
 package pl.javastart.restassured.test.user;
 
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.hamcrest.Matchers;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pl.javastart.restassured.pojo.User;
 
 import java.util.concurrent.TimeUnit;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.requestSpecification;
 import static org.hamcrest.Matchers.equalTo;
 
 public class UserCreationTests extends UserBaseTest {
@@ -63,7 +60,6 @@ public class UserCreationTests extends UserBaseTest {
             .assertThat().body("userStatus", equalTo(123))
             .assertThat().statusCode(200);
 
-        ;
   }
 
 }
