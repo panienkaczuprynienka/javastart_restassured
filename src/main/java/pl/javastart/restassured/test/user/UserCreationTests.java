@@ -6,7 +6,9 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.hamcrest.Matchers;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import pl.javastart.restassured.listeners.MyListener;
 import pl.javastart.restassured.pojo.User;
 
 import java.util.concurrent.TimeUnit;
@@ -14,8 +16,8 @@ import java.util.concurrent.TimeUnit;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
+@Listeners(MyListener.class)
 public class UserCreationTests extends UserBaseTest {
-
 
   @Test
   public void givenCorrectUserDataWhenCreateUserThenUserIsCreatedTest() {

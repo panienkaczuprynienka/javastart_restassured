@@ -1,10 +1,13 @@
 package pl.javastart.restassured.test.user;
 
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import pl.javastart.restassured.listeners.MyListener;
 import pl.javastart.restassured.pojo.User;
 
 import static io.restassured.RestAssured.given;
 
+@Listeners(MyListener.class)
 public class UserUpdateTests extends UserBaseTest {
 
   @Test

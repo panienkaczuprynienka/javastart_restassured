@@ -7,22 +7,22 @@ import org.testng.ITestResult;
 public class MyListener implements ITestListener {
   @Override
   public void onTestStart(ITestResult result) {
-    System.out.println("Starting test " + result.getMethod().getMethodName());
+    System.out.println("MyListener: Starting test " + result.getMethod().getMethodName());
   }
 
   @Override
   public void onTestSuccess(ITestResult result) {
-    System.out.println("Finished successfully test: " + result.getMethod().getMethodName());
+    System.out.println("MyListener: Finished successfully test: " + result.getMethod().getMethodName());
   }
 
   @Override
   public void onTestFailure(ITestResult result) {
-    System.out.println("Test: " + result.getMethod().getMethodName() + " has failed.");
+    System.out.println("MyListener: Test: " + result.getMethod().getMethodName() + " has failed.");
   }
 
   @Override
   public void onTestSkipped(ITestResult result) {
-    System.out.println("Skipping test " + result.getMethod().getMethodName());
+    System.out.println("MyListener: Skipping test " + result.getMethod().getMethodName());
   }
 
   @Override
@@ -32,16 +32,16 @@ public class MyListener implements ITestListener {
 
   @Override
   public void onTestFailedWithTimeout(ITestResult result) {
-    System.out.println("Test: " + result.getMethod().getMethodName() + " has failed because of timeout.");
+    System.out.println("MyListener: Test: " + result.getMethod().getMethodName() + " has failed because of timeout.");
   }
 
   @Override
   public void onStart(ITestContext context) {
-    System.out.println("Starting: " + context.getName());
+    System.out.println("MyListener: Starting: " + context.getName());
   }
 
   @Override
   public void onFinish(ITestContext context) {
-    System.out.println("Finishing: " + context.getName());
+    System.out.println("MyListener: Finishing: " + context.getName());
   }
 }
